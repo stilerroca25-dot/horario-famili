@@ -1,0 +1,3819 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Organizador Familiar</title>
+
+    <style>
+        /* ========================= */
+/* CONFIGURACIÓN GENERAL */
+/* ========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#E8E8E8;
+}
+
+/* ========================= */
+/* PANTALLAS */
+/* ========================= */
+
+#login,
+#registro,
+#organizador{
+
+    width:100%;
+    min-height:100vh;
+
+}
+
+#registro{
+
+    display:none;
+
+}
+
+#organizador{
+
+    display:none;
+
+}
+
+/* ========================= */
+/* CONTENEDOR */
+/* ========================= */
+
+.contenedor{
+
+    width:400px;
+    background:white;
+    margin:80px auto;
+    padding:35px;
+    border-radius:15px;
+    box-shadow:0px 0px 20px rgba(0,0,0,0.25);
+
+}
+
+/* ========================= */
+/* TITULOS */
+/* ========================= */
+
+h1{
+
+    text-align:center;
+    margin-bottom:20px;
+    font-size:40px;
+
+}
+
+h2{
+
+    text-align:center;
+    margin-bottom:25px;
+
+}
+
+/* ========================= */
+/* INPUTS */
+/* ========================= */
+
+input{
+
+    width:100%;
+    padding:13px;
+    margin-top:15px;
+    border:1px solid #999;
+    border-radius:8px;
+    font-size:16px;
+    outline:none;
+
+}
+
+input:focus{
+
+    border:2px solid #4CAF50;
+
+}
+
+/* ========================= */
+/* CONTRASEÑA */
+/* ========================= */
+
+.password{
+
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+
+}
+
+.password input{
+
+    flex:1;
+    margin-top:0;
+
+}
+
+/* ========================= */
+/* BOTONES */
+/* ========================= */
+
+button{
+
+    cursor:pointer;
+    border:none;
+    border-radius:8px;
+    transition:0.3s;
+
+}
+
+#btnIngresar,
+#btnCrearCuenta{
+
+    width:100%;
+    padding:13px;
+    background:#4CAF50;
+    color:white;
+    font-size:17px;
+    margin-top:20px;
+
+}
+
+#btnIngresar:hover,
+#btnCrearCuenta:hover{
+
+    background:#2f8f35;
+
+}
+
+/* ========================= */
+/* BOTÓN OJO */
+/* ========================= */
+
+#verLogin,
+#verRegistro{
+
+    width:55px;
+    background:#555;
+    color:white;
+    font-size:18px;
+
+}
+
+#verLogin:hover,
+#verRegistro:hover{
+
+    background:#333;
+
+}
+
+/* ========================= */
+/* BOTÓN ATRÁS */
+/* ========================= */
+
+#volver{
+
+    width:110px;
+    padding:10px;
+    background:#777;
+    color:white;
+    margin-bottom:20px;
+
+}
+
+#volver:hover{
+
+    background:#555;
+
+}
+
+/* ========================= */
+/* CREAR CUENTA */
+/* ========================= */
+
+p{
+
+    text-align:center;
+    margin-top:25px;
+    font-size:16px;
+
+}
+
+a{
+
+    text-decoration:none;
+    color:blue;
+    font-weight:bold;
+
+}
+
+a:hover{
+
+    text-decoration:underline;
+
+}
+
+/* ========================= */
+/* BOTÓN CERRAR SESIÓN */
+/* ========================= */
+
+#cerrarSesion{
+
+    width:180px;
+    padding:12px;
+    background:#d9534f;
+    color:white;
+    display:block;
+    margin:20px auto;
+
+}
+
+#cerrarSesion:hover{
+
+    background:#b52b27;
+
+}
+
+/* ========================= */
+/* ENCABEZADO DEL HORARIO */
+/* ========================= */
+
+.encabezadoHorario{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:25px;
+
+    margin-top:20px;
+
+    margin-bottom:10px;
+
+}
+
+
+.encabezadoHorario h1{
+
+    margin:0;
+
+}
+
+
+#btnAlarma,
+#btnTareas{
+
+    padding:12px 20px;
+
+    background:#4CAF50;
+
+    color:white;
+
+    font-size:16px;
+
+    border:none;
+
+    border-radius:8px;
+
+}
+
+
+#btnAlarma:hover,
+#btnTareas:hover{
+
+    background:#2f8f35;
+
+}
+
+/* ========================= */
+/* TABLA */
+/* ========================= */
+
+table{
+
+    width:90%;
+    margin:30px auto;
+    border-collapse:collapse;
+    background:white;
+
+}
+
+th{
+
+    background:#BFBFBF;
+    padding:18px;
+    border:2px solid black;
+    font-size:18px;
+
+}
+
+td{
+
+    border:2px solid black;
+    height:70px;
+    text-align:center;
+    font-size:16px;
+
+}
+
+td:focus{
+
+    background:#FFFFCC;
+    outline:none;
+
+}
+
+
+/* ========================= */
+/* BIENVENIDA */
+/* ========================= */
+
+#bienvenida{
+
+    display:none;
+    width:100%;
+    height:100vh;
+
+    background:#4CAF50;
+    color:white;
+
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+
+    animation: aparecer 2s;
+
+}
+
+
+#bienvenida h1{
+
+    font-size:70px;
+    font-family:Georgia, serif;
+    margin-bottom:20px;
+
+}
+
+
+#nombreBienvenida{
+
+    font-size:85px;
+    font-family:"Brush Script MT", cursive;
+
+    animation: crecer 1.5s;
+
+}
+
+
+#fraseBienvenida{
+
+    font-size:25px;
+    margin-top:25px;
+
+    opacity:0;
+
+    animation: aparecerFrase 2s forwards;
+    animation-delay:0.5s;
+
+}
+
+
+
+@keyframes aparecer{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+
+
+@keyframes crecer{
+
+    from{
+
+        transform:scale(0.5);
+        opacity:0;
+
+    }
+
+    to{
+
+        transform:scale(1);
+        opacity:1;
+
+    }
+
+}
+
+
+
+@keyframes aparecerFrase{
+
+    from{
+
+        opacity:0;
+        transform:translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+/* ========================= */
+/* VENTANA DE ALARMA */
+/* ========================= */
+
+#ventanaAlarma{
+
+    display:none;
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:
+    rgba(0,0,0,0.55);
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:1000;
+
+}
+
+
+.contenidoAlarma{
+
+    width:380px;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    box-shadow:
+    0 0 25px
+    rgba(0,0,0,0.35);
+
+}
+
+
+.contenidoAlarma h2{
+
+    margin-bottom:20px;
+
+}
+
+
+.contenidoAlarma select{
+
+    width:100%;
+
+    padding:13px;
+
+    margin-top:15px;
+
+    border:1px solid #999;
+
+    border-radius:8px;
+
+    font-size:16px;
+
+}
+
+
+.botonesAlarma{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-top:25px;
+
+}
+
+
+#cancelarAlarma,
+#guardarAlarma{
+
+    width:50%;
+
+    padding:13px;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+
+#cancelarAlarma{
+
+    background:#777;
+
+}
+
+
+#guardarAlarma{
+
+    background:#4CAF50;
+
+}
+
+/* ========================= */
+/* VENTANA DE TAREAS */
+/* ========================= */
+
+#ventanaTareas{
+
+    display:none;
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    width:100%;
+
+    height:100%;
+
+    background:
+    rgba(0,0,0,0.55);
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:1000;
+
+}
+
+
+.contenidoTareas{
+
+    width:450px;
+
+    max-height:85vh;
+
+    overflow-y:auto;
+
+    background:white;
+
+    padding:30px;
+
+    border-radius:15px;
+
+    box-shadow:
+    0 0 25px
+    rgba(0,0,0,0.35);
+
+}
+
+
+.contenidoTareas h2{
+
+    margin-bottom:20px;
+
+}
+
+
+.tarjetaTarea{
+
+    background:#F2F2F2;
+
+    border-left:
+    6px solid #4CAF50;
+
+    padding:18px;
+
+    margin-bottom:15px;
+
+    border-radius:8px;
+
+}
+
+
+.tarjetaTarea h3{
+
+    margin-bottom:10px;
+
+}
+
+
+.tarjetaTarea p{
+
+    text-align:left;
+
+    margin-top:7px;
+
+    font-size:15px;
+
+}
+
+/* ========================= */
+/* BOTONES DE CADA TAREA */
+/* ========================= */
+
+.botonesTarea{
+
+    display:flex;
+
+    gap:8px;
+
+    margin-top:15px;
+
+}
+
+
+.botonesTarea button{
+
+    flex:1;
+
+    padding:10px;
+
+    border:none;
+
+    border-radius:7px;
+
+    color:white;
+
+    cursor:pointer;
+
+}
+
+
+.btnCompletar{
+
+    background:#4CAF50;
+
+}
+
+
+.btnEditar{
+
+    background:#2196F3;
+
+}
+
+
+.btnEliminar{
+
+    background:#E53935;
+
+}
+
+#cerrarTareas{
+
+    width:100%;
+
+    padding:13px;
+
+    margin-top:15px;
+
+    background:#777;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ========================= -->
+    <!-- INICIO DE SESIÓN -->
+    <!-- ========================= -->
+
+    <div id="login">
+
+        <div class="contenedor">
+
+            <h1>Organizador Familiar</h1>
+
+            <h2>Iniciar Sesión</h2>
+
+            <input
+            type="email"
+            id="usuarioLogin"
+            placeholder="Correo electrónico">
+
+            <div class="password">
+
+                <input
+                type="password"
+                id="claveLogin"
+                placeholder="Contraseña">
+
+                <button id="verLogin">
+                    👁
+                </button>
+
+            </div>
+
+            <button id="btnIngresar">
+
+                Ingresar
+
+            </button>
+
+            <p>
+
+                ¿No tienes una cuenta?
+
+                <a href="#" id="abrirRegistro">
+
+                    Crear cuenta
+
+                </a>
+
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- CREAR CUENTA -->
+    <!-- ========================= -->
+
+    <div id="registro">
+
+        <div class="contenedor">
+
+            <button id="volver">
+
+                ← Atrás
+
+            </button>
+
+            <h2>Crear Cuenta</h2>
+
+            <input
+            type="text"
+            id="nombreRegistro"
+            placeholder="Nombre">
+
+            <input
+            type="email"
+            id="nuevoUsuario"
+            placeholder="Correo electrónico">
+
+            <div class="password">
+
+                <input
+                type="password"
+                id="nuevaClave"
+                placeholder="Contraseña">
+
+                <button id="verRegistro">
+                    👁
+                </button>
+
+            </div>
+
+            <input
+            type="password"
+            id="confirmarClave"
+            placeholder="Confirmar contraseña">
+
+            <button id="btnCrearCuenta">
+
+                Crear Cuenta
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+
+
+
+    <!-- ========================= -->
+    <!-- ORGANIZADOR -->
+    <!-- ========================= -->
+
+    <div id="organizador">
+
+    <div class="encabezadoHorario">
+
+    <button id="btnAlarma">
+        🔔 Alarma
+    </button>
+
+    <h1>Horario Familiar</h1>
+
+    <button id="btnTareas">
+        📋 Tareas
+    </button>
+
+    <button id="btnNotificaciones">
+        🔔 Activar avisos
+    </button>
+
+</div>
+
+    <button id="cerrarSesion">
+
+        Cerrar Sesión
+
+    </button>
+
+        <table>
+
+            <tr>
+
+                <th>Lunes</th>
+                <th>Martes</th>
+                <th>Miércoles</th>
+                <th>Jueves</th>
+                <th>Viernes</th>
+                <th>Sábado</th>
+                <th>Domingo</th>
+
+            </tr>
+
+            <tr>
+
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+
+            </tr>
+
+            <tr>
+
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+
+            </tr>
+
+            <tr>
+
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+
+            </tr>
+
+            <tr>
+
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+
+            </tr>
+
+            <tr>
+
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+
+            </tr>
+
+            <tr>
+
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+                <td contenteditable="true"></td>
+
+            </tr>
+
+        </table>
+
+    </div>
+
+    <!-- ========================= -->
+<!-- VENTANA CREAR ALARMA -->
+<!-- ========================= -->
+
+<div id="ventanaAlarma">
+
+    <div class="contenidoAlarma">
+
+        <h2>🔔 Crear alarma</h2>
+
+        <input
+        type="text"
+        id="nombreTarea"
+        placeholder="¿Qué tienes que hacer?">
+
+        <select id="diaTarea">
+
+            <option value="">
+                Selecciona un día
+            </option>
+
+            <option value="Lunes">
+                Lunes
+            </option>
+
+            <option value="Martes">
+                Martes
+            </option>
+
+            <option value="Miércoles">
+                Miércoles
+            </option>
+
+            <option value="Jueves">
+                Jueves
+            </option>
+
+            <option value="Viernes">
+                Viernes
+            </option>
+
+            <option value="Sábado">
+                Sábado
+            </option>
+
+            <option value="Domingo">
+                Domingo
+            </option>
+
+        </select>
+
+        <input
+        type="time"
+        id="horaTarea">
+
+        <select id="avisoTarea">
+
+            <option value="0">
+                A la hora exacta
+            </option>
+
+            <option value="5">
+                5 minutos antes
+            </option>
+
+            <option value="10">
+                10 minutos antes
+            </option>
+
+            <option value="30">
+                30 minutos antes
+            </option>
+
+            <option value="60">
+                1 hora antes
+            </option>
+
+        </select>
+
+        <div class="botonesAlarma">
+
+            <button id="cancelarAlarma">
+
+                Cancelar
+
+            </button>
+
+            <button id="guardarAlarma">
+
+                💾 Guardar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ========================= -->
+<!-- VENTANA DE TAREAS -->
+<!-- ========================= -->
+
+<div id="ventanaTareas">
+
+    <div class="contenidoTareas">
+
+        <h2>📋 Mis tareas</h2>
+
+        <div id="listaTareas">
+
+        </div>
+
+        <button id="cerrarTareas">
+
+            ← Volver
+
+        </button>
+
+    </div>
+
+</div>
+
+    <!-- ========================= -->
+<!-- BIENVENIDA -->
+<!-- ========================= -->
+
+<div id="bienvenida">
+
+    <h1>Bienvenido</h1>
+
+    <h2 id="nombreBienvenida"></h2>
+
+    <p id="fraseBienvenida">
+        Tu organización comienza aquí
+    </p>
+
+</div>
+
+    <script type="module">
+
+// =======================================
+// IMPORTAR FIREBASE
+// =======================================
+
+import {
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+
+import {
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    signOut
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    doc,
+    setDoc,
+    getDoc,
+    arrayUnion
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+let editarAlarmaActual = null;
+
+
+// =======================================
+// CONFIGURACIÓN DE FIREBASE
+// =======================================
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyApcIRtuuesC39kNohboE9vFuB5N8I_Cpc",
+
+    authDomain:
+    "organizador-familiar-369f7.firebaseapp.com",
+
+    projectId:
+    "organizador-familiar-369f7",
+
+    storageBucket:
+    "organizador-familiar-369f7.firebasestorage.app",
+
+    messagingSenderId:
+    "79723355734",
+
+    appId:
+    "1:79723355734:web:56ac407e8ca65eb4e7e5f7"
+
+};
+
+
+// =======================================
+// INICIAR FIREBASE
+// =======================================
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+const alarmasNotificadas = new Set();
+
+
+// =======================================
+// OBTENER ELEMENTOS
+// =======================================
+
+const login =
+document.getElementById("login");
+
+
+const registro =
+document.getElementById("registro");
+
+
+const organizador =
+document.getElementById("organizador");
+
+
+const bienvenida =
+document.getElementById("bienvenida");
+
+
+const nombreBienvenida =
+document.getElementById("nombreBienvenida");
+
+
+const abrirRegistro =
+document.getElementById("abrirRegistro");
+
+
+const volver =
+document.getElementById("volver");
+
+
+const verLogin =
+document.getElementById("verLogin");
+
+
+const verRegistro =
+document.getElementById("verRegistro");
+
+
+const claveLogin =
+document.getElementById("claveLogin");
+
+
+const nuevaClave =
+document.getElementById("nuevaClave");
+
+
+const confirmarClave =
+document.getElementById("confirmarClave");
+
+
+const btnCrearCuenta =
+document.getElementById("btnCrearCuenta");
+
+
+const btnIngresar =
+document.getElementById("btnIngresar");
+
+
+const cerrarSesion =
+document.getElementById("cerrarSesion");
+
+// =======================================
+// ELEMENTOS DE LA VENTANA TAREAS
+// =======================================
+
+const btnNotificaciones =
+document.getElementById(
+    "btnNotificaciones"
+);
+
+const btnTareas =
+document.getElementById(
+    "btnTareas"
+);
+
+
+const ventanaTareas =
+document.getElementById(
+    "ventanaTareas"
+);
+
+
+const listaTareas =
+document.getElementById(
+    "listaTareas"
+);
+
+
+const cerrarTareas =
+document.getElementById(
+    "cerrarTareas"
+);
+
+const btnAlarma =
+document.getElementById("btnAlarma");
+
+
+const ventanaAlarma =
+document.getElementById(
+    "ventanaAlarma"
+);
+
+
+const cancelarAlarma =
+document.getElementById(
+    "cancelarAlarma"
+);
+
+
+const guardarAlarma =
+document.getElementById(
+    "guardarAlarma"
+);
+
+const nombreTarea =
+document.getElementById(
+    "nombreTarea"
+);
+
+
+const diaTarea =
+document.getElementById(
+    "diaTarea"
+);
+
+
+const horaTarea =
+document.getElementById(
+    "horaTarea"
+);
+
+
+const avisoTarea =
+document.getElementById(
+    "avisoTarea"
+);
+
+
+const celdasHorario =
+document.querySelectorAll(
+    "#organizador td"
+);
+
+// =======================================
+// ACTIVAR NOTIFICACIONES
+// =======================================
+
+btnNotificaciones.addEventListener(
+
+    "click",
+
+    async function(){
+
+        if(
+
+            !("Notification" in window)
+
+        ){
+
+            alert(
+
+                "Este navegador no admite notificaciones."
+
+            );
+
+            return;
+
+        }
+
+
+        const permiso =
+
+        await Notification
+        .requestPermission();
+
+
+        if(
+
+            permiso === "granted"
+
+        ){
+
+            alert(
+
+                "🔔 Las notificaciones fueron activadas."
+
+            );
+
+
+            btnNotificaciones
+            .textContent =
+
+            "✅ Avisos activados";
+
+
+        }else{
+
+
+            alert(
+
+                "No se permitieron las notificaciones."
+
+            );
+
+        }
+
+    }
+
+);
+
+// =======================================
+// ABRIR VENTANA DE ALARMA
+// =======================================
+
+btnAlarma.addEventListener(
+
+    "click",
+
+    function(){
+
+
+        editarAlarmaActual = null;
+
+
+        document.querySelector(
+            ".contenidoAlarma h2"
+        ).textContent =
+
+        "🔔 Crear alarma";
+
+
+        ventanaAlarma
+        .style
+        .display =
+
+        "flex";
+
+
+    }
+
+);
+
+
+// =======================================
+// CERRAR VENTANA DE ALARMA
+// =======================================
+
+cancelarAlarma.addEventListener(
+
+    "click",
+
+    function(){
+
+        ventanaAlarma
+        .style
+        .display =
+
+        "none";
+
+    }
+
+);
+
+// =======================================
+// GUARDAR ALARMA EN FIREBASE
+// =======================================
+
+guardarAlarma.addEventListener(
+
+    "click",
+
+    async function(){
+
+        const usuario =
+        auth.currentUser;
+
+
+        if(!usuario){
+
+            alert(
+                "Debes iniciar sesión."
+            );
+
+            return;
+
+        }
+
+
+        const tarea =
+        nombreTarea.value.trim();
+
+
+        const dia =
+        diaTarea.value;
+
+
+        const hora =
+        horaTarea.value;
+
+
+        const avisoAntes =
+        Number(
+            avisoTarea.value
+        );
+
+
+        // Validar campos
+
+        if(
+
+            tarea === ""
+
+            ||
+
+            dia === ""
+
+            ||
+
+            hora === ""
+
+        ){
+
+            alert(
+
+                "Completa la tarea, el día y la hora."
+
+            );
+
+            return;
+
+        }
+
+
+        const nuevaAlarma = {
+
+            tarea:
+            tarea,
+
+            dia:
+            dia,
+
+            hora:
+            hora,
+
+            avisoAntes:
+            avisoAntes,
+
+            completada:
+            false
+
+        };
+
+        if(editarAlarmaActual){
+
+    await actualizarAlarma(
+
+        editarAlarmaActual,
+
+        nuevaAlarma
+
+    );
+
+
+    editarAlarmaActual = null;
+
+
+    ventanaAlarma.style.display = "none";
+
+
+    await cargarTareas();
+
+
+    return;
+
+}
+
+
+        try{
+
+            await setDoc(
+
+                doc(
+
+                    db,
+
+                    "alarmas",
+
+                    usuario.uid
+
+                ),
+
+                {
+
+                    listaAlarmas:
+
+                    arrayUnion(
+                        nuevaAlarma
+                    )
+
+                },
+
+                {
+
+                    merge:true
+
+                }
+
+            );
+
+
+            alert(
+
+                "🔔 Alarma guardada correctamente."
+
+            );
+
+
+            // Limpiar formulario
+
+            nombreTarea.value =
+            "";
+
+
+            diaTarea.value =
+            "";
+
+
+            horaTarea.value =
+            "";
+
+
+            avisoTarea.value =
+            "0";
+
+
+            // Cerrar ventana
+
+            ventanaAlarma
+            .style
+            .display =
+
+            "none";
+
+
+        }catch(error){
+
+            console.error(
+
+                "Error al guardar la alarma:",
+
+                error
+
+            );
+
+
+            alert(
+
+                "No se pudo guardar la alarma."
+
+            );
+
+        }
+
+    }
+
+);
+
+// =======================================
+// ABRIR VENTANA DE TAREAS
+// =======================================
+
+btnTareas.addEventListener(
+
+    "click",
+
+    async function(){
+
+        ventanaTareas
+        .style
+        .display =
+
+        "flex";
+
+
+        await cargarTareas();
+
+    }
+
+);
+
+
+// =======================================
+// CERRAR VENTANA DE TAREAS
+// =======================================
+
+cerrarTareas.addEventListener(
+
+    "click",
+
+    function(){
+
+        ventanaTareas
+        .style
+        .display =
+
+        "none";
+
+    }
+
+);
+
+// =======================================
+// ABRIR REGISTRO
+// =======================================
+
+abrirRegistro.addEventListener(
+
+    "click",
+
+    function(event){
+
+        event.preventDefault();
+
+        login.style.display =
+        "none";
+
+        registro.style.display =
+        "block";
+
+    }
+
+);
+
+
+// =======================================
+// VOLVER AL LOGIN
+// =======================================
+
+volver.addEventListener(
+
+    "click",
+
+    function(){
+
+        registro.style.display =
+        "none";
+
+        login.style.display =
+        "block";
+
+    }
+
+);
+
+
+// =======================================
+// MOSTRAR CONTRASEÑA LOGIN
+// =======================================
+
+verLogin.addEventListener(
+
+    "click",
+
+    function(){
+
+        if(
+            claveLogin.type
+            === "password"
+        ){
+
+            claveLogin.type =
+            "text";
+
+            verLogin.innerHTML =
+            "🙈";
+
+        }else{
+
+            claveLogin.type =
+            "password";
+
+            verLogin.innerHTML =
+            "👁";
+
+        }
+
+    }
+
+);
+
+
+// =======================================
+// MOSTRAR CONTRASEÑA REGISTRO
+// =======================================
+
+verRegistro.addEventListener(
+
+    "click",
+
+    function(){
+
+        if(
+            nuevaClave.type
+            === "password"
+        ){
+
+            nuevaClave.type =
+            "text";
+
+            confirmarClave.type =
+            "text";
+
+            verRegistro.innerHTML =
+            "🙈";
+
+        }else{
+
+            nuevaClave.type =
+            "password";
+
+            confirmarClave.type =
+            "password";
+
+            verRegistro.innerHTML =
+            "👁";
+
+        }
+
+    }
+
+);
+
+
+// =======================================
+// CREAR CUENTA
+// =======================================
+
+btnCrearCuenta.addEventListener(
+
+    "click",
+
+    async function(){
+
+        const nombre =
+
+        document
+        .getElementById(
+            "nombreRegistro"
+        )
+        .value
+        .trim();
+
+
+        const correo =
+
+        document
+        .getElementById(
+            "nuevoUsuario"
+        )
+        .value
+        .trim();
+
+
+        const contraseña =
+
+        document
+        .getElementById(
+            "nuevaClave"
+        )
+        .value;
+
+
+        const confirmar =
+
+        document
+        .getElementById(
+            "confirmarClave"
+        )
+        .value;
+
+
+        if(
+
+        nombre === ""
+
+        ||
+
+        correo === ""
+
+        ||
+
+        contraseña === ""
+
+        ||
+
+        confirmar === ""
+
+    ){
+
+            alert(
+
+                "Complete todos los campos."
+
+            );
+
+            return;
+
+        }
+
+
+        if(
+
+            contraseña
+            !==
+            confirmar
+
+        ){
+
+            alert(
+
+                "Las contraseñas no coinciden."
+
+            );
+
+            return;
+
+        }
+
+
+        try{
+
+            const resultado =
+
+await
+createUserWithEmailAndPassword(
+
+    auth,
+
+    correo,
+
+    contraseña
+
+);
+
+
+await setDoc(
+
+    doc(
+
+        db,
+
+        "usuarios",
+
+        resultado.user.uid
+
+    ),
+
+    {
+
+        nombre: nombre,
+
+        correo: correo
+
+    }
+
+);
+
+
+            document
+            .getElementById(
+                "nombreRegistro"
+            )
+            .value = "";
+
+            document
+            .getElementById(
+                "nuevoUsuario"
+            )
+            .value = "";
+
+
+            document
+            .getElementById(
+                "nuevaClave"
+            )
+            .value = "";
+
+
+            document
+            .getElementById(
+                "confirmarClave"
+            )
+            .value = "";
+
+
+            registro.style.display =
+            "none";
+
+
+            bienvenida.style.display =
+            "flex";
+
+
+            nombreBienvenida
+            .textContent =
+
+            nombre;
+
+
+            setTimeout(
+
+                async function(){
+
+                    bienvenida
+                    .style
+                    .display =
+
+                    "none";
+
+
+                    organizador
+                    .style
+                    .display =
+
+                    "block";
+
+
+                    await
+                    cargarHorario();
+
+                },
+
+                2000
+
+            );
+
+
+        }catch(error){
+
+            if(
+
+                error.code
+
+                ===
+
+                "auth/email-already-in-use"
+
+            ){
+
+                alert(
+
+                    "Ese correo ya tiene una cuenta."
+
+                );
+
+            }else if(
+
+                error.code
+
+                ===
+
+                "auth/weak-password"
+
+            ){
+
+                alert(
+
+                    "La contraseña debe tener al menos 6 caracteres."
+
+                );
+
+            }else{
+
+                alert(
+
+                    "No se pudo crear la cuenta."
+
+                );
+
+                console.error(
+                    error
+                );
+
+            }
+
+        }
+
+    }
+
+);
+
+
+// =======================================
+// INICIAR SESIÓN
+// =======================================
+
+btnIngresar.addEventListener(
+
+    "click",
+
+    async function(){
+
+        const correo =
+
+        document
+        .getElementById(
+            "usuarioLogin"
+        )
+        .value
+        .trim();
+
+
+        const contraseña =
+
+        document
+        .getElementById(
+            "claveLogin"
+        )
+        .value;
+
+
+        if(
+
+            correo === ""
+
+            ||
+
+            contraseña === ""
+
+        ){
+
+            alert(
+
+                "Ingrese su correo y contraseña."
+
+            );
+
+            return;
+
+        }
+
+
+        try{
+
+            await
+            signInWithEmailAndPassword(
+
+                auth,
+
+                correo,
+
+                contraseña
+
+            );
+
+
+            login.style.display =
+            "none";
+
+
+            await cargarNombre();
+
+
+            bienvenida.style.display =
+            "flex";
+
+            
+
+
+            setTimeout(
+
+                async function(){
+
+                    bienvenida
+                    .style
+                    .display =
+
+                    "none";
+
+
+                    organizador
+                    .style
+                    .display =
+
+                    "block";
+
+
+                    await
+                    cargarHorario();
+
+                },
+
+                2000
+
+            );
+
+
+        }catch(error){
+
+            alert(
+
+                "Correo o contraseña incorrectos."
+
+            );
+
+            console.error(
+                error
+            );
+
+        }
+
+    }
+
+);
+
+
+// =======================================
+// CERRAR SESIÓN
+// =======================================
+
+cerrarSesion.addEventListener(
+
+    "click",
+
+    async function(){
+
+        try{
+
+            await
+            signOut(auth);
+
+
+            organizador
+            .style
+            .display =
+
+            "none";
+
+
+            login
+            .style
+            .display =
+
+            "block";
+
+
+            document
+            .getElementById(
+                "usuarioLogin"
+            )
+            .value = "";
+
+
+            document
+            .getElementById(
+                "claveLogin"
+            )
+            .value = "";
+
+
+            celdasHorario
+            .forEach(
+
+                function(celda){
+
+                    celda
+                    .innerHTML =
+
+                    "";
+
+                }
+
+            );
+
+
+        }catch(error){
+
+            alert(
+
+                "No se pudo cerrar sesión."
+
+            );
+
+            console.error(
+                error
+            );
+
+        }
+
+    }
+
+);
+
+
+// =======================================
+// GUARDAR HORARIO
+// =======================================
+
+celdasHorario.forEach(
+
+    function(celda){
+
+        celda.addEventListener(
+
+            "input",
+
+            guardarHorario
+
+        );
+
+    }
+
+);
+
+
+async function guardarHorario(){
+
+
+    const usuario =
+
+    auth.currentUser;
+
+
+    if(!usuario){
+
+        return;
+
+    }
+
+
+    const horario = [];
+
+
+    celdasHorario.forEach(
+
+        function(celda){
+
+            horario.push(
+
+                celda.innerHTML
+
+            );
+
+        }
+
+    );
+
+
+    try{
+
+        await setDoc(
+
+            doc(
+
+                db,
+
+                "horarios",
+
+                usuario.uid
+
+            ),
+
+            {
+
+                horario:
+
+                horario
+
+            }
+
+        );
+
+
+    }catch(error){
+
+        console.error(
+
+            "Error al guardar:",
+
+            error
+
+        );
+
+    }
+
+}
+
+
+// =======================================
+// CARGAR HORARIO
+// =======================================
+
+async function cargarHorario(){
+
+
+    const usuario =
+
+    auth.currentUser;
+
+
+    if(!usuario){
+
+        return;
+
+    }
+
+
+    try{
+
+
+        const documento =
+
+        await getDoc(
+
+            doc(
+
+                db,
+
+                "horarios",
+
+                usuario.uid
+
+            )
+
+        );
+
+
+        if(
+
+            documento.exists()
+
+        ){
+
+
+            const datos =
+
+            documento.data();
+
+
+            const horario =
+
+            datos.horario
+
+            ||
+
+            [];
+
+
+            celdasHorario
+            .forEach(
+
+                function(
+
+                    celda,
+
+                    indice
+
+                ){
+
+                    celda
+                    .innerHTML =
+
+                    horario[indice]
+
+                    ||
+
+                    "";
+
+                }
+
+            );
+
+
+        }else{
+
+
+            celdasHorario
+            .forEach(
+
+                function(celda){
+
+                    celda
+                    .innerHTML =
+
+                    "";
+
+                }
+
+            );
+
+        }
+
+
+    }catch(error){
+
+        console.error(
+
+            "Error al cargar:",
+
+            error
+
+        );
+
+    }
+
+}
+
+// =======================================
+// CARGAR NOMBRE DEL USUARIO
+// =======================================
+
+async function cargarNombre(){
+
+    const usuario =
+
+    auth.currentUser;
+
+
+    if(!usuario){
+
+        return;
+
+    }
+
+
+    try{
+
+
+        const documento =
+
+        await getDoc(
+
+            doc(
+
+                db,
+
+                "usuarios",
+
+                usuario.uid
+
+            )
+
+        );
+
+
+        if(
+
+            documento.exists()
+
+        ){
+
+
+            const datos =
+
+            documento.data();
+
+
+            nombreBienvenida
+            .textContent =
+
+            datos.nombre;
+
+
+        }else{
+
+
+            nombreBienvenida
+            .textContent =
+
+            usuario.email;
+
+        }
+
+
+    }catch(error){
+
+
+        console.error(
+
+            "Error al cargar el nombre:",
+
+            error
+
+        );
+
+
+        nombreBienvenida
+        .textContent =
+
+        usuario.email;
+
+    }
+
+}
+
+// =======================================
+// CARGAR TAREAS DESDE FIREBASE
+// =======================================
+
+async function cargarTareas(){
+
+
+    const usuario =
+    auth.currentUser;
+
+
+    if(!usuario){
+
+        return;
+
+    }
+
+
+    try{
+
+
+        const documento =
+
+        await getDoc(
+
+            doc(
+
+                db,
+
+                "alarmas",
+
+                usuario.uid
+
+            )
+
+        );
+
+
+        listaTareas
+        .innerHTML = "";
+
+
+        if(
+
+            !documento.exists()
+
+        ){
+
+
+            listaTareas
+            .innerHTML =
+
+            "<p>No tienes tareas guardadas.</p>";
+
+
+            return;
+
+        }
+
+
+        const datos =
+
+        documento.data();
+
+
+        const alarmas =
+
+        datos.listaAlarmas
+
+        ||
+
+        [];
+
+
+        if(
+
+            alarmas.length === 0
+
+        ){
+
+
+            listaTareas
+            .innerHTML =
+
+            "<p>No tienes tareas guardadas.</p>";
+
+
+            return;
+
+        }
+
+
+        alarmas.forEach(
+
+            function(alarma){
+
+
+                let textoAviso;
+
+
+                if(
+
+                    alarma.avisoAntes
+                    ===
+                    0
+
+                ){
+
+
+                    textoAviso =
+
+                    "A la hora exacta";
+
+
+                }else if(
+
+                    alarma.avisoAntes
+                    ===
+                    60
+
+                ){
+
+
+                    textoAviso =
+
+                    "1 hora antes";
+
+
+                }else{
+
+
+                    textoAviso =
+
+                    alarma.avisoAntes
+
+                    +
+
+                    " minutos antes";
+
+                }
+
+
+                const tarjeta =
+
+                document
+                .createElement(
+
+                    "div"
+
+                );
+
+
+                tarjeta.className =
+
+                "tarjetaTarea";
+
+
+                tarjeta.innerHTML =
+
+            `
+
+            <h3>
+
+            🔔 ${alarma.tarea}
+
+            </h3>
+
+
+            <p>
+
+            📅 ${alarma.dia}
+
+            </p>
+
+
+            <p>
+
+            🕒 ${alarma.hora}
+
+            </p>
+
+
+            <p>
+
+            ⏰ Aviso:
+            ${textoAviso}
+
+            </p>
+
+
+            <div class="botonesTarea">
+
+                <button
+                class="btnCompletar">
+
+                    ${alarma.completada
+                    ?
+                    "↩️ Pendiente"
+                    :
+                    "✅ Completar"}
+
+                </button>
+
+
+                <button
+                class="btnEditar">
+
+                    ✏️ Editar
+
+                </button>
+
+
+                <button
+                class="btnEliminar">
+
+                    🗑️ Eliminar
+
+                </button>
+
+            </div>
+
+            `;
+
+            const btnCompletar =
+
+tarjeta.querySelector(
+
+    ".btnCompletar"
+
+);
+
+const btnEliminar =
+
+tarjeta.querySelector(
+
+    ".btnEliminar"
+
+);
+
+
+
+const btnEditar =
+
+tarjeta.querySelector(
+
+    ".btnEditar"
+
+);
+
+
+btnEditar.addEventListener(
+
+    "click",
+
+    function(){
+
+
+        editarAlarmaActual = alarma;
+
+
+        abrirFormularioEditar();
+
+
+    }
+
+);
+
+btnEliminar.addEventListener(
+
+    "click",
+
+    async function(){
+
+
+        const confirmar =
+
+        confirm(
+
+            "¿Eliminar esta tarea?"
+
+        );
+
+
+        if(!confirmar){
+
+            return;
+
+        }
+
+
+        await eliminarTarea(
+
+            alarma
+
+        );
+
+
+        await cargarTareas();
+
+
+    }
+
+);
+
+
+btnCompletar.addEventListener(
+
+    "click",
+
+    async function(){
+
+        await cambiarEstadoTarea(
+
+            alarma
+
+        );
+
+
+        await cargarTareas();
+
+    }
+
+);
+
+                listaTareas
+                .appendChild(
+
+                    tarjeta
+
+                );
+
+            }
+
+        );
+
+
+    }catch(error){
+
+
+        console.error(
+
+            "Error al cargar tareas:",
+
+            error
+
+        );
+
+
+        listaTareas
+        .innerHTML =
+
+        "<p>No se pudieron cargar las tareas.</p>";
+
+    }
+
+}
+
+// =======================================
+// ACTUALIZAR UNA ALARMA EXISTENTE
+// =======================================
+
+async function actualizarAlarma(
+
+    alarmaVieja,
+
+    alarmaNueva
+
+){
+
+
+    const usuario =
+
+    auth.currentUser;
+
+
+    if(!usuario){
+
+        return;
+
+    }
+
+
+    const referencia =
+
+    doc(
+
+        db,
+
+        "alarmas",
+
+        usuario.uid
+
+    );
+
+
+    const documento =
+
+    await getDoc(
+
+        referencia
+
+    );
+
+
+    if(
+
+        !documento.exists()
+
+    ){
+
+        return;
+
+    }
+
+
+    const datos =
+
+    documento.data();
+
+
+    const alarmas =
+
+    datos.listaAlarmas
+
+    ||
+
+    [];
+
+
+    const nuevasAlarmas =
+
+    alarmas.map(
+
+        function(alarma){
+
+
+            if(
+
+                alarma.tarea
+
+                ===
+
+                alarmaVieja.tarea
+
+
+                &&
+
+
+                alarma.dia
+
+                ===
+
+                alarmaVieja.dia
+
+
+                &&
+
+
+                alarma.hora
+
+                ===
+
+                alarmaVieja.hora
+
+            ){
+
+
+                return{
+
+                    ...alarmaNueva,
+
+                    completada:
+
+                    alarma.completada
+
+                };
+
+
+            }
+
+
+            return alarma;
+
+
+        }
+
+    );
+
+
+    await setDoc(
+
+        referencia,
+
+        {
+
+            listaAlarmas:
+
+            nuevasAlarmas
+
+        },
+
+        {
+
+            merge:true
+
+        }
+
+    );
+
+
+}
+
+// =======================================
+// REVISAR ALARMAS
+// =======================================
+
+async function revisarAlarmas(){
+
+
+    const usuario =
+    auth.currentUser;
+
+
+    if(!usuario){
+
+        return;
+
+    }
+
+
+    if(
+
+        Notification.permission
+        !==
+        "granted"
+
+    ){
+
+        return;
+
+    }
+
+
+    try{
+
+
+        const documento =
+
+        await getDoc(
+
+            doc(
+
+                db,
+
+                "alarmas",
+
+                usuario.uid
+
+            )
+
+        );
+
+
+        if(
+
+            !documento.exists()
+
+        ){
+
+            return;
+
+        }
+
+
+        const datos =
+
+        documento.data();
+
+
+        const alarmas =
+
+        datos.listaAlarmas
+
+        ||
+
+        [];
+
+
+        const ahora =
+
+        new Date();
+
+
+        const dias = [
+
+            "Domingo",
+
+            "Lunes",
+
+            "Martes",
+
+            "Miércoles",
+
+            "Jueves",
+
+            "Viernes",
+
+            "Sábado"
+
+        ];
+
+
+        const diaActual =
+
+        dias[
+            ahora.getDay()
+        ];
+
+
+        const horaActual =
+
+        String(
+
+            ahora.getHours()
+
+        ).padStart(
+
+            2,
+
+            "0"
+
+        );
+
+
+        const minutoActual =
+
+        String(
+
+            ahora.getMinutes()
+
+        ).padStart(
+
+            2,
+
+            "0"
+
+        );
+
+
+        const tiempoActual =
+
+        horaActual
+
+        +
+
+        ":"
+
+        +
+
+        minutoActual;
+
+
+        alarmas.forEach(
+
+            function(alarma){
+
+                if(
+
+                    alarma.completada
+                    ===
+                    true
+
+                ){
+
+                    return;
+
+                }
+
+
+                if(
+
+                    alarma.dia
+                    !==
+                    diaActual
+
+                ){
+
+                    return;
+
+                }
+
+
+                const partesHora =
+
+                alarma.hora
+                .split(
+
+                    ":"
+
+                );
+
+
+                const horaAlarma =
+
+                Number(
+
+                    partesHora[0]
+
+                );
+
+
+                const minutoAlarma =
+
+                Number(
+
+                    partesHora[1]
+
+                );
+
+
+                const fechaAlarma =
+
+                new Date();
+
+
+                fechaAlarma
+                .setHours(
+
+                    horaAlarma
+
+                );
+
+
+                fechaAlarma
+                .setMinutes(
+
+                    minutoAlarma
+
+                );
+
+
+                fechaAlarma
+                .setSeconds(
+
+                    0
+
+                );
+
+
+                fechaAlarma
+                .setMilliseconds(
+
+                    0
+
+                );
+
+
+                fechaAlarma
+                .setMinutes(
+
+                    fechaAlarma
+                    .getMinutes()
+
+                    -
+
+                    alarma.avisoAntes
+
+                );
+
+
+                const horaAviso =
+
+                String(
+
+                    fechaAlarma
+                    .getHours()
+
+                ).padStart(
+
+                    2,
+
+                    "0"
+
+                );
+
+
+                const minutoAviso =
+
+                String(
+
+                    fechaAlarma
+                    .getMinutes()
+
+                ).padStart(
+
+                    2,
+
+                    "0"
+
+                );
+
+
+                const tiempoAviso =
+
+                horaAviso
+
+                +
+
+                ":"
+
+                +
+
+                minutoAviso;
+
+
+                const identificador =
+
+                alarma.tarea
+
+                +
+
+                "-"
+
+                +
+
+                alarma.dia
+
+                +
+
+                "-"
+
+                +
+
+                alarma.hora
+
+                +
+
+                "-"
+
+                +
+
+                tiempoAviso;
+
+
+                if(
+
+                    tiempoActual
+                    ===
+                    tiempoAviso
+
+                    &&
+
+                    !alarmasNotificadas
+                    .has(
+
+                        identificador
+
+                    )
+
+                ){
+
+
+                    new Notification(
+
+                        "🔔 Organizador Familiar",
+
+                        {
+
+                            body:
+
+                            "Tienes que: "
+
+                            +
+
+                            alarma.tarea
+
+                        }
+
+                    );
+
+
+                    alarmasNotificadas
+                    .add(
+
+                        identificador
+
+                    );
+
+                }
+
+            }
+
+        );
+
+
+    }catch(error){
+
+
+        console.error(
+
+            "Error al revisar alarmas:",
+
+            error
+
+        );
+
+    }
+
+}
+
+// =======================================
+// INICIAR REVISIÓN DE ALARMAS
+// =======================================
+
+setInterval(
+
+    revisarAlarmas,
+
+    30000
+
+);
+
+// =======================================
+// CAMBIAR ESTADO DE UNA TAREA
+// =======================================
+
+async function cambiarEstadoTarea(
+
+    alarmaSeleccionada
+
+){
+
+
+    const usuario =
+
+    auth.currentUser;
+
+
+    if(!usuario){
+
+        return;
+
+    }
+
+
+    const referencia =
+
+    doc(
+
+        db,
+
+        "alarmas",
+
+        usuario.uid
+
+    );
+
+
+    const documento =
+
+    await getDoc(
+
+        referencia
+
+    );
+
+
+    if(
+
+        !documento.exists()
+
+    ){
+
+        return;
+
+    }
+
+
+    const datos =
+
+    documento.data();
+
+
+    const alarmas =
+
+    datos.listaAlarmas
+
+    ||
+
+    [];
+
+
+    const nuevasAlarmas =
+
+    alarmas.map(
+
+        function(alarma){
+
+
+            if(
+
+                alarma.tarea
+                ===
+                alarmaSeleccionada.tarea
+
+                &&
+
+                alarma.dia
+                ===
+                alarmaSeleccionada.dia
+
+                &&
+
+                alarma.hora
+                ===
+                alarmaSeleccionada.hora
+
+            ){
+
+
+                return{
+
+                    ...alarma,
+
+                    completada:
+
+                    !alarma.completada
+
+                };
+
+            }
+
+
+            return alarma;
+
+        }
+
+    );
+
+
+    await setDoc(
+
+        referencia,
+
+        {
+
+            listaAlarmas:
+
+            nuevasAlarmas
+
+        },
+
+        {
+
+            merge:true
+
+        }
+
+    );
+
+}
+
+// =======================================
+// ELIMINAR UNA TAREA
+// =======================================
+
+async function eliminarTarea(
+
+    alarmaSeleccionada
+
+){
+
+
+    const usuario =
+
+    auth.currentUser;
+
+
+    if(!usuario){
+
+        return;
+
+    }
+
+
+    const referencia =
+
+    doc(
+
+        db,
+
+        "alarmas",
+
+        usuario.uid
+
+    );
+
+
+    const documento =
+
+    await getDoc(
+
+        referencia
+
+    );
+
+
+    if(
+
+        !documento.exists()
+
+    ){
+
+        return;
+
+    }
+
+
+    const datos =
+
+    documento.data();
+
+
+    const alarmas =
+
+    datos.listaAlarmas
+
+    ||
+
+    [];
+
+
+    const nuevasAlarmas =
+
+    alarmas.filter(
+
+        function(alarma){
+
+
+            return !(
+
+                alarma.tarea
+
+                ===
+
+                alarmaSeleccionada.tarea
+
+
+                &&
+
+
+                alarma.dia
+
+                ===
+
+                alarmaSeleccionada.dia
+
+
+                &&
+
+
+                alarma.hora
+
+                ===
+
+                alarmaSeleccionada.hora
+
+            );
+
+
+        }
+
+    );
+
+
+    await setDoc(
+
+        referencia,
+
+        {
+
+            listaAlarmas:
+
+            nuevasAlarmas
+
+        },
+
+        {
+
+            merge:true
+
+        }
+
+    );
+
+
+}
+
+// =======================================
+// ABRIR FORMULARIO PARA EDITAR ALARMA
+// =======================================
+
+function abrirFormularioEditar(){
+
+
+    if(!editarAlarmaActual){
+
+        return;
+
+    }
+
+
+    // Abrir ventana
+
+    ventanaAlarma.style.display = "flex";
+
+
+    // Cambiar título
+
+    document.querySelector(
+        ".contenidoAlarma h2"
+    ).textContent =
+
+    "✏️ Editar alarma";
+
+
+    // Cargar datos actuales
+
+    nombreTarea.value =
+
+    editarAlarmaActual.tarea;
+
+
+    diaTarea.value =
+
+    editarAlarmaActual.dia;
+
+
+    horaTarea.value =
+
+    editarAlarmaActual.hora;
+
+
+    avisoTarea.value =
+
+    editarAlarmaActual.avisoAntes;
+
+
+}
+
+</script>
+
+</body>
+
+</html>
