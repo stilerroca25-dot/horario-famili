@@ -328,6 +328,77 @@ td{
 
 }
 
+/* ========================= */
+/* FECHA EN CADA CASILLA */
+/* ========================= */
+
+td{
+
+    position:relative;
+
+    padding-top:25px;
+
+}
+
+
+.fechaCasilla{
+
+    position:absolute;
+
+    top:4px;
+
+    left:4px;
+
+    width:92px;
+
+    height:20px;
+
+    border:1px solid #777;
+
+    border-radius:4px;
+
+    background:#F2F2F2;
+
+    color:#555;
+
+    font-size:11px;
+
+    text-align:center;
+
+    line-height:20px;
+
+    cursor:pointer;
+
+    user-select:none;
+
+}
+
+
+.fechaCasilla:hover{
+
+    background:#DDDDDD;
+
+}
+
+
+.inputFechaCasilla{
+
+    position:absolute;
+
+    top:4px;
+
+    left:4px;
+
+    width:125px;
+
+    height:25px;
+
+    font-size:11px;
+
+    z-index:10;
+
+}
+
 td:focus{
 
     background:#FFFFCC;
@@ -714,6 +785,336 @@ td:focus{
     color:white;
 
     font-size:16px;
+
+}
+
+/* ================================= */
+/* DISEÑO RESPONSIVE GENERAL */
+/* ================================= */
+
+*{
+
+    box-sizing:border-box;
+
+}
+
+
+html,
+
+body{
+
+    width:100%;
+
+    max-width:100%;
+
+    margin:0;
+
+    overflow-x:hidden;
+
+}
+
+
+/* ================================= */
+/* ORGANIZADOR */
+/* ================================= */
+
+#organizador{
+
+    width:100%;
+
+    max-width:1400px;
+
+    margin:auto;
+
+    padding:15px;
+
+}
+
+
+/* ================================= */
+/* ENCABEZADO */
+/* ================================= */
+
+.encabezadoHorario{
+
+    width:100%;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:15px;
+
+}
+
+
+.encabezadoHorario h1{
+
+    margin:0;
+
+    text-align:center;
+
+    font-size:clamp(
+        32px,
+        5vw,
+        65px
+    );
+
+}
+
+
+#btnAlarma,
+
+#btnTareas,
+
+#btnNotificaciones{
+
+    max-width:100%;
+
+    padding:12px 18px;
+
+    font-size:clamp(
+        13px,
+        2vw,
+        16px
+    );
+
+}
+
+
+/* ================================= */
+/* CONTENEDOR DEL HORARIO */
+/* ================================= */
+
+#organizador{
+
+    overflow-x:auto;
+
+    -webkit-overflow-scrolling:touch;
+
+}
+
+
+/* ================================= */
+/* TABLA */
+/* ================================= */
+
+#organizador table{
+
+    width:100%;
+
+    min-width:850px;
+
+    margin:25px auto;
+
+    border-collapse:collapse;
+
+    table-layout:fixed;
+
+}
+
+
+#organizador th{
+
+    padding:15px 8px;
+
+    font-size:clamp(
+        14px,
+        2vw,
+        20px
+    );
+
+    white-space:normal;
+
+}
+
+
+#organizador td{
+
+    height:85px;
+
+    min-width:115px;
+
+    padding-top:30px;
+
+    font-size:clamp(
+        12px,
+        1.8vw,
+        16px
+    );
+
+    overflow-wrap:anywhere;
+
+}
+
+
+/* ================================= */
+/* FECHA */
+/* ================================= */
+
+#organizador .fechaCasilla{
+
+    top:4px;
+
+    left:4px;
+
+    width:90px;
+
+    max-width:
+    calc(
+        100% - 8px
+    );
+
+    height:20px;
+
+    font-size:10px;
+
+    line-height:20px;
+
+    overflow:hidden;
+
+    white-space:nowrap;
+
+}
+
+
+#organizador .inputFechaCasilla{
+
+    top:3px;
+
+    left:3px;
+
+    width:
+    calc(
+        100% - 6px
+    );
+
+    max-width:125px;
+
+    height:23px;
+
+    font-size:10px;
+
+}
+
+
+/* ================================= */
+/* VENTANAS */
+/* ================================= */
+
+.contenidoAlarma,
+
+.contenidoTareas{
+
+    width:90%;
+
+    max-width:450px;
+
+    max-height:85vh;
+
+    overflow-y:auto;
+
+}
+
+
+/* ================================= */
+/* CELULARES */
+/* ================================= */
+
+@media screen and (max-width:600px){
+
+    #organizador{
+
+        padding:8px;
+
+    }
+
+
+    .encabezadoHorario{
+
+        gap:8px;
+
+    }
+
+
+    .encabezadoHorario h1{
+
+        width:100%;
+
+        font-size:42px;
+
+    }
+
+
+    #btnAlarma,
+
+    #btnTareas,
+
+    #btnNotificaciones{
+
+        flex:1;
+
+        min-width:100px;
+
+        padding:10px 8px;
+
+        font-size:13px;
+
+    }
+
+
+    #cerrarSesion{
+
+        width:80%;
+
+        max-width:300px;
+
+    }
+
+
+    /* La tabla conserva casillas cómodas
+       y se desliza solo dentro del horario */
+
+    #organizador table{
+
+        min-width:840px;
+
+        margin:15px 0;
+
+    }
+
+
+    #organizador th{
+
+        padding:12px 5px;
+
+        font-size:15px;
+
+    }
+
+
+    #organizador td{
+
+        height:80px;
+
+        font-size:13px;
+
+    }
+
+
+    .contenidoAlarma,
+
+    .contenidoTareas{
+
+        width:94%;
+
+        padding:18px;
+
+    }
 
 }
 
@@ -1309,6 +1710,216 @@ const celdasHorario =
 document.querySelectorAll(
     "#organizador td"
 );
+
+// =======================================
+// CREAR FECHA EN CADA CASILLA
+// =======================================
+
+function crearFechaCasilla(celda){
+
+    // Revisar si la fecha ya existe
+
+    if(
+
+        celda.querySelector(
+            ".fechaCasilla"
+        )
+
+    ){
+
+        return;
+
+    }
+
+
+    // Crear rectángulo de fecha
+
+    const fecha =
+
+    document.createElement(
+        "div"
+    );
+
+
+    fecha.className =
+
+    "fechaCasilla";
+
+
+    fecha.textContent =
+
+    "dd/mm/aaaa";
+
+
+    fecha.contentEditable =
+
+    "false";
+
+
+    // Agregar fecha a la esquina
+
+    celda.prepend(
+        fecha
+    );
+
+
+    // Al hacer clic
+
+    fecha.addEventListener(
+
+        "click",
+
+        function(event){
+
+            event.stopPropagation();
+
+
+            const inputFecha =
+
+            document.createElement(
+                "input"
+            );
+
+
+            inputFecha.type =
+
+            "date";
+
+
+            inputFecha.className =
+
+            "inputFechaCasilla";
+
+
+            inputFecha.contentEditable =
+
+            "false";
+
+
+            // Ocultar rectángulo
+
+            fecha.style.display =
+
+            "none";
+
+
+            // Agregar selector
+
+            celda.appendChild(
+                inputFecha
+            );
+
+
+            inputFecha.focus();
+
+
+            inputFecha.showPicker?.();
+
+
+            // Guardar fecha elegida
+
+            inputFecha.addEventListener(
+
+                "change",
+
+                function(){
+
+                    if(
+
+                        inputFecha.value
+                        !==
+                        ""
+
+                    ){
+
+                        const partes =
+
+                        inputFecha.value
+                        .split("-");
+
+
+                        fecha.textContent =
+
+                        partes[2]
+
+                        +
+
+                        "/"
+
+                        +
+
+                        partes[1]
+
+                        +
+
+                        "/"
+
+                        +
+
+                        partes[0];
+
+                    }
+
+
+                    inputFecha.remove();
+
+
+                    fecha.style.display =
+
+                    "block";
+
+
+                    guardarHorario();
+
+                }
+
+            );
+
+
+            // Si no elige fecha
+
+            inputFecha.addEventListener(
+
+                "blur",
+
+                function(){
+
+                    setTimeout(
+
+                        function(){
+
+                            if(
+
+                                inputFecha.parentNode
+
+                            ){
+
+                                inputFecha.remove();
+
+
+                                fecha
+                                .style
+                                .display =
+
+                                "block";
+
+                            }
+
+                        },
+
+                        200
+
+                    );
+
+                }
+
+            );
+
+        }
+
+    );
+
+}
 
 // =======================================
 // ACTIVAR NOTIFICACIONES
@@ -2354,6 +2965,146 @@ async function guardarHorario(){
 
 }
 
+// =======================================
+// ABRIR SELECTOR DE FECHA
+// =======================================
+
+function abrirFechaCasilla(
+
+    celda,
+
+    fecha
+
+){
+
+
+    const inputFecha =
+
+    document.createElement(
+        "input"
+    );
+
+
+    inputFecha.type =
+
+    "date";
+
+
+    inputFecha.className =
+
+    "inputFechaCasilla";
+
+
+    fecha.style.display =
+
+    "none";
+
+
+    celda.appendChild(
+        inputFecha
+    );
+
+
+    inputFecha.focus();
+
+
+    inputFecha.showPicker?.();
+
+
+    inputFecha.addEventListener(
+
+        "change",
+
+        function(){
+
+            if(
+
+                inputFecha.value
+                !==
+                ""
+
+            ){
+
+                const partes =
+
+                inputFecha.value
+                .split("-");
+
+
+                fecha.textContent =
+
+                partes[2]
+
+                +
+
+                "/"
+
+                +
+
+                partes[1]
+
+                +
+
+                "/"
+
+                +
+
+                partes[0];
+
+            }
+
+
+            inputFecha.remove();
+
+
+            fecha.style.display =
+
+            "block";
+
+
+            guardarHorario();
+
+        }
+
+    );
+
+
+    inputFecha.addEventListener(
+
+        "blur",
+
+        function(){
+
+            setTimeout(
+
+                function(){
+
+                    if(
+
+                        inputFecha.parentNode
+
+                    ){
+
+                        inputFecha.remove();
+
+
+                        fecha.style.display =
+
+                        "block";
+
+                    }
+
+                },
+
+                150
+
+            );
+
+        }
+
+    );
+
+}
 
 // =======================================
 // CARGAR HORARIO
@@ -2426,14 +3177,18 @@ async function cargarHorario(){
 
                 ){
 
-                    celda
-                    .innerHTML =
+                    celda.innerHTML =
 
-                    horario[indice]
+horario[indice]
 
-                    ||
+||
 
-                    "";
+"";
+
+
+crearFechaCasilla(
+    celda
+);
 
                 }
 
@@ -2444,19 +3199,23 @@ async function cargarHorario(){
 
 
             celdasHorario
-            .forEach(
+.forEach(
 
-                function(celda){
+    function(celda){
 
-                    celda
-                    .innerHTML =
+        celda
+        .innerHTML =
 
-                    "";
+        "";
 
-                }
 
-            );
+        crearFechaCasilla(
+            celda
+        );
 
+    }
+
+);
         }
 
 
